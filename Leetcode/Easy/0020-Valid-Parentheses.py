@@ -1,5 +1,7 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        #Time: O(n)
+        #Space: O(n)
         stack = []
         counterparts = {')': '(', '}': '{', ']': '['}
         
