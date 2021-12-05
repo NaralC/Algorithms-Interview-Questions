@@ -1,7 +1,7 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        #Time: O(n)
-        #Space: O(n)
+        #Time: O(n * m)
+        #Space: O(n * m)
         memoize = [[0 for _ in range(n)] for _ in range(m)]
         
         for row in range(m):
