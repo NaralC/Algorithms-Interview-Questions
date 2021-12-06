@@ -15,5 +15,5 @@ class Solution:
             else:
                 output += currentChar
             
-        #Add up the last element (since inputst are guaranteed valid)   
+        #Add up the last element (since inputs are guaranteed valid)   
         return output + romanToInt[s[-1]]
