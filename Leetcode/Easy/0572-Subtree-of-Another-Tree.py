@@ -9,7 +9,6 @@ class Solution:
         #Time: O(root * subRoot) #As we perform a mirror check on every node
         #Space: O(root * subRoot)
         if not root: return False #Since there's nothing to check
-        if not subRoot: return True #Emptiness is a always a subtree
         
         if mirrorCheck(root, subRoot):
             return True
