@@ -5,7 +5,7 @@ class Solution:
         output = []
         
         for idx, current in enumerate(intervals):
-            #The new interval goes before the current one
+            #Edge case: the new interval goes before the current one
             if newInterval[1] < current[0]:
                 output.append(newInterval)
                 return output + intervals[idx:]
