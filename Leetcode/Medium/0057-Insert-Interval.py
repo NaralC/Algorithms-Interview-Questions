@@ -5,19 +5,19 @@ class Solution:
         output = []
         
         for idx, current in enumerate(intervals):
-            #The new interval goes before the current one
+            #The new one goes before the current
             if newInterval[1] < current[0]:
                 output.append(newInterval)
                 return output + intervals[idx:]
             
-            #The new interval goes after the current one
+            #The new one goes after the current (could be after any intervals)
             elif newInterval[0] > current[1]:
                 output.append(current)
             
-            #The new intervals overlaps with the current one
+            #Overlap
             else:
-                newInterval = [min(newInterval[0], current[0]),
-                               max(newInterval[1], current[1])]
+                newInterval = [min(current[0], newInterval[0]),
+                               max(current[1], newInterval[1])]
         
         output.append(newInterval)
         return output
