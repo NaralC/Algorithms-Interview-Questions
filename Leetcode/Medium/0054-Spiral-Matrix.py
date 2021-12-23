@@ -30,8 +30,8 @@ class Solution:
             top += 1
             bot -= 1
         
-        #Check if we missed any spots
-        #If yes, there's a single row/column left in the middle
+        #Edge case: a leftover row or column in the middle
+        #Perform a scan, any order is fine because the leftover is either a row/column
         if len(output) < width * height:
             for row in range(top, bot + 1):
                 for col in range(left, right + 1):
