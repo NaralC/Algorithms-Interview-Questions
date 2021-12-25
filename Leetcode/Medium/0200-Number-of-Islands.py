@@ -11,18 +11,18 @@ class Solution:
         for row in range(len(grid)):
             for col in range(len(grid[0])):
                 if grid[row][col] == '1':
-                    sinkNeighbors(row, col, grid)
                     output += 1
+                    sinkIsland(row, col, grid)
         
         return output
     
-def sinkNeighbors(row, col, grid):
-    if (row < 0 or row >= len(grid)) or (col < 0 or col >= len(grid[0])): return #Boundary check
-    if grid[row][col] == '0': return #Keep the sinking process from spreading out of the island
+def sinkIsland(row, col, grid):
+    #Boundary check/Keep the sinking process inside the island
+    if (row < 0 or row > len(grid) - 1) or (col < 0 or col > len(grid[0]) - 1) or grid[row][col] == '0':
+        return
     
-    grid[row][col] = '0'
-    
-    sinkNeighbors(row - 1, col, grid) #Top
-    sinkNeighbors(row + 1, col, grid) #Bottom
-    sinkNeighbors(row, col - 1, grid) #Left
-    sinkNeighbors(row, col + 1, grid) #Right
+    grid[row][col] = '0' #sink the current land
+    sinkIsland(row - 1, col, grid) #top
+    sinkIsland(row + 1, col, grid) #bottom
+    sinkIsland(row, col - 1, grid) #left
+    sinkIsland(row, col + 1, grid) #right
