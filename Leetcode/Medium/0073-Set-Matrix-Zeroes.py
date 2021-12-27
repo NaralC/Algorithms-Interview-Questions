@@ -6,6 +6,9 @@ class Solution:
         constantSpace(matrix)
         
 def constantSpace(matrix):
+    #Time: O(m * n) looping through every element
+    #Space: O(1)
+
     firstRowZero, firstColZero = False, False
     
     for row in range(len(matrix)):
@@ -31,7 +34,7 @@ def constantSpace(matrix):
             matrix[row][0] = 0
         
 def extraSpace(matrix):
-    #Time: O(m * n) looping through every elemen
+    #Time: O(m * n) looping through every element
     #Space: O(m + n) in the worst case where all rows and cols need to be set to zero
 
     rows, cols = set(), set()
