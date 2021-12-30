@@ -7,7 +7,7 @@ class Solution:
 def greedy(gas, cost):
     #Time: O(n)
     #Space: O(1)
-    #1) If we move to some value, and the total sum is greater than zero, then it means, that previous values did bring some value to the outcome
+    #1) If we move to some value, and the total sum is greater than zero, then it means that previous cities brought some value to the outcome
     #2) If there's a solution, then it has to be the smallest possible value, as it's where values start to stack up
     
     tank, output = 0, 0
