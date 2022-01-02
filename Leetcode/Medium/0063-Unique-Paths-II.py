@@ -23,6 +23,6 @@ class Solution:
         for row in range(1, ROWS):
             for col in range(1, COLS):
                 if grid[row][col] == 0:
-                    dp[row][col] += dp[row - 1][col] + dp[row][col - 1]
+                    dp[row][col] = dp[row - 1][col] + dp[row][col - 1]
         
         return dp[-1][-1]       
