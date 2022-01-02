@@ -1,5 +1,8 @@
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        #Time: O(m * n)
+        #Space: O(m * n)
+
         #Check if the start or finish is blocked
         if obstacleGrid[0][0] == 1 or obstacleGrid[-1][-1] == 1:
             return 0
