@@ -1,27 +1,28 @@
 class Solution:
-    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+    def uniquePathsWithObstacles(self, grid: List[List[int]]) -> int:
         #Time: O(m * n)
         #Space: O(m * n)
-
-        #Check if the start or finish is blocked
-        if obstacleGrid[0][0] == 1 or obstacleGrid[-1][-1] == 1:
+        
+        #Return 0 if either the start or finish is blocked
+        if grid[0][0] or grid[-1][-1]:
             return 0
         
-        ROWS, COLS = len(obstacleGrid), len(obstacleGrid[0])
-        ways = [[0 for _ in range(COLS)] for _ in range(ROWS)]
-        ways[0][0] = 1
+        ROWS, COLS = len(grid), len(grid[0])
+        dp = [[0 for _ in range(COLS)] for _ in range(ROWS)]
+        dp[0][0] = 1
         
-        for row in range(ROWS):
-            for col in range(COLS):
-                if obstacleGrid[row][col] == 0:
-                    #Skip this as it's already been processed
-                    if row == 0 and col == 0: 
-                        continue 
-                    #Only works if we're not on left col
-                    left = ways[row][col - 1] if col > 0 else 0 
-                    #Only works if we're not on top row
-                    top = ways[row - 1][col] if row > 0 else 0 
-                    
-                    ways[row][col] = left + top
-                    
-        return ways[-1][-1]
+        #First row
+        for col in range(1, COLS):
+            dp[0][col] = dp[0][col - 1] if grid[0][col] == 0 else 0
+        
+        #First col
+        for row in range(1, ROWS):
+            dp[row][0] = dp[row - 1][0] if grid[row][0] == 0 else 0
+        
+        #Remaining cells
+        for row in range(1, ROWS):
+            for col in range(1, COLS):
+                if grid[row][col] == 0:
+                    dp[row][col] += dp[row - 1][col] + dp[row][col - 1]
+        
+        return dp[-1][-1]       
