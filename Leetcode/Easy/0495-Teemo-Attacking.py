@@ -4,7 +4,7 @@ class Solution:
     
 def optimized(timeSeries, duration):
     #Time: O(n)
-    #Space: O(n)
+    #Space: O(1)
     
     #There's no reset after the last element - thus we're skipping it
     total = 0
