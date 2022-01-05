@@ -11,17 +11,17 @@ class Solution:
             if idx > len(word) - 1:
                 return True
             
-            #Goes out of bound or is already visited
+            #Goes out of board's bound or is already visited
             if row < 0 or col < 0 or row >= ROWS or col >= COLS or visited[row][col] or word[idx] != board[row][col]:
                 return False
             
             #Recursively proceed with DFS
-            visited[row][col] = True
+            visited[row][col] = True #Mark as visited to prevent double back
             top = traverse(row - 1, col, idx + 1)
             bot = traverse(row + 1, col, idx + 1)
             left = traverse(row, col - 1, idx + 1)
             right = traverse(row, col + 1, idx + 1)
-            visited[row][col] = False
+            visited[row][col] = False #Revert back to let recursions starting from other cells use it
             
             return top or bot or left or right
         
