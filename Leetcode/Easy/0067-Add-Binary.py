@@ -15,5 +15,13 @@ class Solution:
             
             output = str(carry % 2) + output
             carry = carry // 2
+
+        # while carry or a or b:
+        #     val1 = a.pop() if len(a) else 0
+        #     val2 = b.pop() if len(b) else 0
+        #     carry += int(val1) + int(val2)
+            
+        #     output = str(carry % 2) + output
+        #     carry //= 2
             
         return output
