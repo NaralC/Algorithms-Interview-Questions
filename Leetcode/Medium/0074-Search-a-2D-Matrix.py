@@ -2,7 +2,7 @@ class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         #val too high -> move left
         #val too low -> move down
-        #Time: O(m * n)
+        #Time: O(m + n)
         #Space: O(1)
         row, col = 0, len(matrix[0]) - 1
         
