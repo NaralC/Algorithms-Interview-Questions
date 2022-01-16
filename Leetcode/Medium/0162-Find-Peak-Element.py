@@ -5,21 +5,23 @@ class Solution:
         
         left, right = 0, len(nums) - 1
         
-        #left <= right doesn't work since it can result in idx being out of range
         while left < right:
             mid = (left + right) // 2
             
-            #Found the peak
+            #Case1: found a local peak
             if nums[mid] > nums[mid - 1] and nums[mid] > nums[mid + 1]:
                 return mid
-            #We're on a rising slope, so the peak is to the right
-            if nums[mid] < nums[mid + 1]: 
+
+            #Case2: go right if the value on that side is bigger
+            elif nums[mid] < nums[mid + 1]:
                 left = mid + 1
-            #We're on a downward slope, so the peak is to the left
-            elif nums[mid] > nums[mid - 1]:
+            
+            #Case3: go left if the value on that side is bigger
+            elif nums[mid] > nums[mid + 1]:
                 right = mid - 1
-        
-        #Handles cases where:
-        #1) len(nums) == 1, return the only idx
-        #2) len(nums) == 2, return the bigger idx
+            
+            
+        #Handle cases where:
+        #len(nums) <= 2: return the bigger/only element
+        #The input is a slope without spikes
         return left

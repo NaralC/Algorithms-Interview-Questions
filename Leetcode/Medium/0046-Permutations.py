@@ -1,7 +1,7 @@
 class Solution:
     def permute(self, inputNum: List[int]) -> List[List[int]]:
-        #Time: O(n * !n) As we loop through all elements and their permutations
-        #Space: O(n * !n) Recursion call-stack
+        #Time: O(!n) As there's one less element in the input each time
+        #Space: O( !n) Recursion call-stack
 
         generate(output := [], [], inputNum)
         return output

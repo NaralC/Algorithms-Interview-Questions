@@ -8,7 +8,7 @@ class Solution:
         
         for target in range(1, amount + 1):
             for coin in coins:
-                #Only try out with coins that don't the current change target
+                #Only try out with coins fit current change target
                 if coin > target: continue
                 
                 #Track the minimum amount of coin usage when trying different coins

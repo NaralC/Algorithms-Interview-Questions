@@ -1,15 +1,17 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        #Time: O(2^n * n) #Complexity of subsets of n size, while we (*n) since we're looping through again and again
-        #Space: O(2^n * n)
+        #Time: O(2^n * n) (2^n) because it's a powerset; (*n) since we're looping over again and again
+        #Space: O(2^n)
         
-        output = [[]]
+        allSubsets = [[]]
         
-        #Add new numbers on top of each snapshot
-        for newNum in nums:
-            #Loop through an automatically created snapshot of output
-            for idx in range(len(output)):
-                newSubset = output[idx] + [newNum]
-                output.append(newSubset)
-                
-        return output
+        for current in nums:
+            #Iterate and fill data into a snapshot of allSubsets
+            for idx in range(len(allSubsets)):
+                allSubsets.append(allSubsets[idx] + [current])
+        
+        return allSubsets
+        
+        #    👇
+        #[1,2,3]
+        #allSubsets = [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
