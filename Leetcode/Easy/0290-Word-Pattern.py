@@ -2,23 +2,24 @@ class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
         #Time: O(n)
         #Space: O(n)
+        #Same idea as 'Isomorphic Strings'
         
         words = list(s.split(' '))
-        if len(pattern) != len(words): return False
         
-        matcher = {} #Pattern : Word
+        if len(words) != len(pattern): return False
         
-        for idx in range(len(words)):
-            #Case1: pattern not in matcher
-            if pattern[idx] not in matcher.keys():
-                
-                if words[idx] in matcher.values():
-                    return False
-                else:
-                    matcher[pattern[idx]] = words[idx]
+        wordsToPattern = {}
+        patternToWords = {}
+        
+        for word, pat in zip(words, pattern):
             
-            #Case2: pattern already in matcher, but word mismatch
-            elif matcher[pattern[idx]] != words[idx]:
+            if word in wordsToPattern and wordsToPattern[word] != pat:
                 return False
-                
+            
+            if pat in patternToWords and patternToWords[pat] != word:
+                return False
+            
+            wordsToPattern[word] = pat
+            patternToWords[pat] = word
+        
         return True
