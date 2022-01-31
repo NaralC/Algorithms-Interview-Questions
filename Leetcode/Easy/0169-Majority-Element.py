@@ -1,38 +1,22 @@
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
-        return mooreAlgo(nums)
+        #Time: O(n)
+        #Space: O(1)
+        #Only one element can appear more than 1/2 of the time, think of it in fractions!
         
-def mooreAlgo(nums):
-    #Time: O(n)
-    #Space: O(1)
-    
-    curNum, count = nums[0], 1
-    
-    for num in nums[1:]:
-        if count == 0:
-            curNum, count = num, 1
-            continue
+        count, current = 0, None
         
-        if num == curNum:
-            count += 1
-        else:
-            count -= 1
+        for num in nums:
+            #Character match
+            if num == current:
+                count += 1
             
-    return curNum
-
-def hashTable(nums):
-    #Time: O(n)
-    #Space: O(n)
-    
-    track = {} #[number, frequency]
-
-    for num in nums:
-        track[num] = track.get(num, 0) + 1
-
-    highestNum, highestFreq = 0, 0
-    for num, freq in track.items():
-        if freq > highestFreq:
-            highestFreq = freq
-            highestNum = num
-
-    return highestNum
+            #Reset counter and current candidate
+            elif count == 0:
+                current, count = num, 1
+            
+            #Character mismatch
+            else:
+                count -= 1
+            
+        return current
