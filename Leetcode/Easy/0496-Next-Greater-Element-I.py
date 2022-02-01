@@ -6,7 +6,7 @@ class Solution:
         nextGreater = {} #{val : bigger_val}
         stack = [] #monotonic [big -> small]
         
-        #Get the info of which number is smaller than which
+        #Get the info of which number is bigger than which
         for num in nums2:
             while len(stack) and stack[-1] < num:
                 nextGreater[stack.pop()] = num
