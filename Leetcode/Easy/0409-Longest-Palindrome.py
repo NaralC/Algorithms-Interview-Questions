@@ -22,5 +22,5 @@ class Solution:
                 count += val - 1
                 oddFound = True
         
-        #If we've run into a char with odd frequency before, the middle of the palindrome be filled with an extra
+        #If we've run into a char with odd frequency before, the middle of the palindrome can be filled with an extra
         return count + 1 if oddFound else count
