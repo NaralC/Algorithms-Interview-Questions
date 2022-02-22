@@ -8,9 +8,9 @@ class Solution:
         ptr1, ptr2 = 0, 0
         count, maxCount = 0, 0
         
-        while ptr1 < len(start) and ptr2 < len(end):
-            val1 = start[ptr1]
-            val2 = end[ptr2]
+        #No need to iterate with ptr2 afterwards because it's downhill in terms of room count after ptr1 goes out of bound
+        while ptr1 < len(start):
+            val1, val2 = start[ptr1], end[ptr2]
             
             if val1 < val2:
                 count += 1
@@ -19,5 +19,5 @@ class Solution:
             else:
                 count -= 1
                 ptr2 += 1
-                
+        
         return maxCount
