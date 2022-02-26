@@ -1,7 +1,7 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
-        #Time: O(v + e)
-        #Space: O(v + e)
+        #Time: O(?)
+        #Space: O(?)
         
         def dfs(current, history):
             #No need to check for loops as the input is an acyclic graph
