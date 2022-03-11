@@ -1,5 +1,7 @@
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        from collections import defaultdict
+
         #Time: O(v + e)
         #Space: O(v + e)
         
