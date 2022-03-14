@@ -11,7 +11,7 @@ class Solution:
             if nums[left] < nums[right]:
                 return min(output, nums[left])
             
-            #Our boundary is not on the smaller sorted side yet
+            #Our boundary is not exclusively on the smaller sorted side yet
             else:
                 mid = (left + right) // 2
                 output = min(output, nums[mid])
