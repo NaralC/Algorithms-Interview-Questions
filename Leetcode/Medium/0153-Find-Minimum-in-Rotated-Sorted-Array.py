@@ -7,20 +7,21 @@ class Solution:
         left, right = 0, len(nums) - 1
         
         while left <= right:
-            #Our boundary is on the smaller sorted side
+            #Our boundary is exclusively on the smaller sorted side
             if nums[left] < nums[right]:
                 return min(output, nums[left])
             
-            #Our boundary is on the bigger sorted side
-            mid = (left + right) // 2
-            output = min(output, nums[mid])
-            
-            #Mid still hangs on the bigger side
-            if nums[left] <= nums[mid]:
-                left = mid + 1
-            
-            #Mid already on the smaller side
+            #Our boundary is not on the smaller sorted side yet
             else:
-                right = mid - 1
+                mid = (left + right) // 2
+                output = min(output, nums[mid])
+                
+                #Mid still hangs on the bigger side
+                if nums[left] <= nums[mid]:
+                    left = mid + 1
+                
+                #Mid already on the smaller side
+                else:
+                    right = mid - 1
         
         return output
