@@ -1,3 +1,6 @@
+from errno import EILSEQ
+
+
 class Solution:
     def findMin(self, nums: List[int]) -> int:
         #Time: O(logn)
