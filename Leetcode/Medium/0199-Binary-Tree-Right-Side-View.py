@@ -9,8 +9,9 @@ class Solution:
         #Time: O(n) where w = max width of any level
         #Space: O(w)
         #Iterate through each level with its width, and only append the last nodes of each level to the output array
-        
-        output, q = [], collections.deque([root])
+        from collections import deque
+
+        output, q = [], deque([root])
         
         while q:
             width = len(q)
