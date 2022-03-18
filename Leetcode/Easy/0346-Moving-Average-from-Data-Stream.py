@@ -1,9 +1,8 @@
+from collections import deque
 class MovingAverage:
     #Time: O(1)
     #Space: O(size)
-    
-    from collections import deque
-    
+
     def __init__(self, size: int):
         self.q = deque()
         self.total = 0
