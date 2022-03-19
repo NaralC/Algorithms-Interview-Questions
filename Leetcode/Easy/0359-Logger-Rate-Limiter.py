@@ -1,4 +1,6 @@
 class Logger:
+    #Time: O(1)
+    #Space: O(n)
 
     def __init__(self):
         self.lastSent = dict() #{message : latest timestamp}
