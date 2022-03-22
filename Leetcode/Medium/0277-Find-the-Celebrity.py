@@ -41,6 +41,7 @@ def utilizeStack(n):
         a = stack.pop()
         b = stack.pop()
 
+        #The celebrity must not know anyone but everyone must know them
         if knows(a, b):
             stack.append(b)
         else:
