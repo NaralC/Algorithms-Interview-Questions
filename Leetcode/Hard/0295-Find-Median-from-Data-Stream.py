@@ -3,7 +3,7 @@ from heapq import *
 class MedianFinder:
 
     def __init__(self):
-        # maxHeap holds larger numbers, while minHeap holds smaller numbers,
+        # maxHeap holds smaller numbers, while minHeap holds larger numbers,
         # so we can retrieve the top of each heap and return them as the median in constant time
         # The size difference must be < 1
         
