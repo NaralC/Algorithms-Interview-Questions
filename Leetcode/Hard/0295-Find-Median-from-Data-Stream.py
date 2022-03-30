@@ -16,7 +16,8 @@ class MedianFinder:
         heappush(self.maxHeap, -num)
         
         # In case we just handed a larger number to maxHeap, give it back to minHeap
-        heappush(self.minHeap, -heappop(self.maxHeap))
+        if len(self.maxHeap) and len(self.minHeap) and -self.maxHeap[0] > self.minHeap[0]:
+            heappush(self.minHeap, -heappop(self.maxHeap))
         
         # Rebalance the heap if needed
         if len(self.maxHeap) - 1 > len(self.minHeap):
