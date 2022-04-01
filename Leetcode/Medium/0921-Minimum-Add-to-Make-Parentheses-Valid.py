@@ -24,7 +24,6 @@ def greedy(s):
     # Space: O(1)
 
     unmatchedOpen = unmatchedClose = 0
-    output = 0
 
     for char in s:
         # Require a closing
