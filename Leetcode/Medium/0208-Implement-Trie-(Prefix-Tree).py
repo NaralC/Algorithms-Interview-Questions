@@ -34,7 +34,7 @@ class Trie:
         
         current = self.root
         
-        for char in word:
+        for char in prefix:
             if char not in current.children:
                 return False
             current = current.children[char]
