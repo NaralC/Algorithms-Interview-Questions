@@ -1,18 +1,17 @@
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        #Time: O(n log(n))
-        #Space: O(n)
-        intervals.sort(key = lambda x: x[0]) #Sort everything by their starting point
-        output = [intervals[0]]
+        # Time: O(nlogn)
+        # Space: O(n)
         
-        for current in intervals[1:]:
-            latest = output[-1]
+        stack = []
+        
+        for start, end in sorted(intervals):
+            # Overlap
+            if len(stack) and stack[-1][1] >= start:
+                stack[-1][1] = max(stack[-1][1], end)
             
-            #In case of an overlap with the latest interval
-            if latest[1] >= current[0]:
-                latest[1] = max(latest[1], current[1])
-            #No overlap with the latest interval
+            # No overlap
             else:
-                output.append(current)
-                    
-        return output
+                stack.append([start, end])
+        
+        return stack
