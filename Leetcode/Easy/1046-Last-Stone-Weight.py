@@ -1,25 +1,20 @@
-from heapq import heapify, heappop, heappush
+from heapq import *
 
 class Solution:
     def lastStoneWeight(self, stones: List[int]) -> int:
-        #Time: O(nlogn) as we pop from heap n times
-        #Space: O(n)
+        # Time: O(n * logn) as we pop out all the stones, each time costing O(logn)
+        # Space: O(n)
         
-        #Invert the weights to turn them into a max heap
-        stones = [-weight for weight in stones]
-        heapify(stones) #since heaps in Python are min heaps by default
+        # Invert the values so that we get a max heap
+        stones = [-s for s in stones]
+        heapify(stones)
         
-        #Pop the top 2 heaviest stones
+        # Begin comparing 2 heaviest stones
         while len(stones) >= 2:
-            s1 = -(heappop(stones))
-            s2 = -(heappop(stones))
+            s1 = -heappop(stones)
+            s2 = -heappop(stones)
             
-            #Both stones are of equal weight -> Both get destroyed
-            if s1 == s2:
-                continue
-            
-            #s1 is heavier -> Append the remaining weight back to heap
-            else:
+            if s1 > s2:
                 heappush(stones, -(s1 - s2))
         
-        return -(stones[0]) if len(stones) else 0
+        return -stones[0] if len(stones) else 0
