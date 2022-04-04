@@ -1,19 +1,17 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        #Time: O(n)
-        #Space: O(1)
+        # Time: O(n)
+        # Space: O(1)
         
-        #[0, 0, 0, ...., z]
-        #[a, b, c, ...., z]
-        charFreq1 = [0 for _ in range(26)]
-        charFreq2 = [0 for _ in range(26)]
+        # Words of different length cannot be anagrams
+        if len(s) != len(t):
+            return False
         
-        for idx, char in enumerate(s):
-            #ord('a') - ord('a') = 96 - 96 = 0
-            #charFreq1[0] += 1
-            charFreq1[ord(char) - ord('a')] += 1
+        # Return if both words have the same character count 
+        s_count, t_count = [0] * 26, [0] * 26
         
-        for idx, char in enumerate(t):
-            charFreq2[ord(char) - ord('a')] += 1
-            
-        return charFreq1 == charFreq2
+        for s_char, t_char in zip(s, t):
+            s_count[ord(s_char) - ord('a')] += 1
+            t_count[ord(t_char) - ord('a')] += 1
+        
+        return s_count == t_count

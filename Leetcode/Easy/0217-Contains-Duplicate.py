@@ -1,22 +1,30 @@
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        return trackWithSet(nums)
-    
-def trackWithSet(nums):
-    #Time: O(n)
-    #Space: O(n)
-    seen = set()
-    
+        return utilizeSet(nums)
+        
+def utilizeSet(nums):
+    # Time: O(n)
+    # Space: O(n)
+
+    seen = dict()
+
     for num in nums:
         if num in seen:
             return True
-        
-        seen.add(num)
-    
+        seen[num] = True
+
     return False
         
-def setDifference(nums):
-    #Time: O(n)
-    #Space: O(?)
+def sorting(nums):
+    # Time: O(nlogn)
+    # Space: O(1)
 
-    return not len(nums) == len(set(nums))
+    nums.sort()
+
+    for idx in range(1, len(nums)):
+        left, right = nums[idx - 1], nums[idx]
+
+        if left == right:
+            return True
+
+    return False
