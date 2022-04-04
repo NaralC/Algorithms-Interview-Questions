@@ -1,20 +1,14 @@
 class Solution:
     def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
-        #Time: O(nlogn)
-        #Space: O(n)
-        #No overlap in time intervals -> return True
-        #If there's an overlap -> return False
+        # Time: O(nlogn)
+        # Space: O(1)
         
-        if not len(intervals): return True
+        intervals.sort()
         
-        intervals.sort(key = lambda x: x[0])
-        stack = [intervals[0]]
-        
-        for i in intervals[1:]:
-            previousEnd = stack[-1][1]
+        for idx in range(1, len(intervals)):
+            left_end, right_start = intervals[idx - 1][1], intervals[idx][0]
             
-            if previousEnd > i[0]:
+            if left_end > right_start:
                 return False
-            stack.append(i)
         
         return True
