@@ -1,20 +1,28 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        #Time: O(n)
-        #Space: O(n)
+        # Time: O(n)
+        # Space: O(n)
+        
+        open_close = {'(' : ')', '[' : ']', '{' : '}'}
         stack = []
-        counterparts = {')': '(', '}': '{', ']': '['}
         
         for char in s:
-            #O(1) lookup time since there are only 3 parentheses
-            if char in counterparts.values():
+            # Append normally if it's an opening
+            if char in open_close.keys():
                 stack.append(char)
+            
+            # If it's a closing, check if it can make a good pair
             else:
-                if stack == []: #In case the input is ")"
+                # Handle cases like ')'
+                if not len(stack):
                     return False
-                operand1 = stack.pop()
-                operand2 = counterparts[char]
                 
-                if operand1 != operand2: return False
+                # ')' should match the element on top of the stack
+                operand1 = char
+                operand2 = open_close[stack.pop()]
                 
-        return True if stack == [] else False #In case the input is "("
+                if operand1 != operand2:
+                    return False
+                
+        # Valid parentheses should not have anything left in the stack
+        return not len(stack)
