@@ -6,28 +6,31 @@
 
 class Solution:
     def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        #Time: O(n)
-        #Space: O(1)
-        #Floyd's Cycle Detection Algorithm
+        # Time: O(n)
+        # Space: O(1)
+        # Floyd's Cycle Detection
         
-        #Perform a slow-fast pointer loop check as usual
+        if not head: return
+        
+        # Detect if there's a loop
         slow, fast = head, head
+        loop = False
         
-        while fast and fast.next:
+        while fast.next and fast.next.next:
             fast = fast.next.next
             slow = slow.next
             
             if fast == slow:
+                loop = True
                 break
         
-        #Determine whether we're out of bound
-        if not fast or not fast.next:
-            return None
+        # No loop
+        if not loop:
+            return
         
-        #Increment the head pointer until it meets the slow one
-        while head:
-            if head == slow:
-                return head
-            
+        # Move the head ptr forward til it meets the slow ptr
+        while head != slow:
             head = head.next
             slow = slow.next
+        
+        return head
