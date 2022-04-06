@@ -6,26 +6,30 @@
 #         self.right = right
 class Solution:
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        #Time: O(root * subRoot) #As we perform a mirror check on every node
-        #Space: O(root * subRoot)
-        if not root: return False #Since there's nothing to check
+        # Time: O(n^2)
+        # Space: O(n)
+        # Perform a similarity check on every node
+        if not root:
+            return False
         
-        if mirrorCheck(root, subRoot):
+        if found(root, subRoot):
             return True
         
-        leftInfo = self.isSubtree(root.left, subRoot)
-        rightInfo = self.isSubtree(root.right, subRoot)
+        # Only have to find a match once to verify
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
         
-        #We only need one check to validate to confirm their similarity
-        return leftInfo or rightInfo
-    
-def mirrorCheck(root1, root2):
-    #Both are null
-    if not root1 and not root2:
+def found(root, subRoot):
+    # Case 1: Both nodes are null
+    if not root and not subRoot:
         return True
     
-    #Either is null / Both are occupied, but with different values
-    if (not root1 or not root2) or (root1.val != root2.val):
+    # Case 2: Either node is null
+    if not root or not subRoot:
         return False
     
-    return mirrorCheck(root1.left, root2.left) and mirrorCheck(root1.right, root2.right)
+    # Case 3: Both nodes are occupied, but have unmatching value
+    if root.val != subRoot.val:
+        return False
+    
+    # All nodes have to be strictly the same to validate as the same tree
+    return found(root.left, subRoot.left) and found(root.right, subRoot.right)
