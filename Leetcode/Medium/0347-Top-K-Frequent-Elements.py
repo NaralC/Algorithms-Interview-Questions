@@ -3,7 +3,7 @@ from heapq import *
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        return maxHeap(nums, k)
+        return bucketSort(nums, k)
         
 def maxHeap(nums, k):
     # Time: O(klogn)
@@ -23,6 +23,7 @@ def bucketSort(nums, k):
     # Time: O(n)
     # Space: O(n)
     # The most frequent a number can be is len(nums) -> Bucket Sort
+    # So use buckets to indicate what numbers have x frequency
 
     # Get the frequency of each number with a hash table
     freq = Counter(nums)
