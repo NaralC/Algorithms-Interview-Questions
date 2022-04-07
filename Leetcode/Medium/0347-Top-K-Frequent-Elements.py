@@ -1,38 +1,47 @@
 from collections import Counter
-import heapq
+from heapq import *
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         return maxHeap(nums, k)
         
-def sortDict(nums, k):
-    #Time: O(nlogn)
-    #Space: O(n)
-
-    #Map each number's frequency
-    count = Counter(nums)
-
-    #Sort the hash table by each number's frequency
-    #The table will now be converted to a list of keys
-    count = sorted(count, key = lambda x: count[x], reverse = True)
-
-    return count[:k]
-        
 def maxHeap(nums, k):
-    #Time: O(nlogk) popping out an element costs O(logn) and we have k elements to pop
-    #Space: O(n)
+    # Time: O(klogn)
+    # Space: O(n)
 
-    #Map each number's frequency
-    count = Counter(nums)
+    # Count the frequency of each number with a hash table
+    freq = Counter(nums)
 
-    #Convert it into a list, so it works with heapify
-    count = [(-freq, num) for num, freq in count.items()]
-    heapq.heapify(count) #This turns into a max heap since freq of each num is negative
+    # Let the heap sort the numbers by their frequencies
+    nums = [(appearance, num) for num, appearance in freq.items()]
+    heapify(nums)
 
-    #Ship the output
+    # Return top k most frequent elements
+    return [num for _, num in nlargest(k, nums)]
+        
+def bucketSort(nums, k):
+    # Time: O(n)
+    # Space: O(n)
+    # The most frequent a number can be is len(nums) -> Bucket Sort
+
+    # Get the frequency of each number with a hash table
+    freq = Counter(nums)
+
+    # Allocate buckets, each one indicating a frequency
+    buckets = [[] for _ in range(len(nums) + 1)]
+
+    for num in set(nums):
+        buckets[freq[num]].append(num)
+
+    # Return the top k most frequent elements
     output = []
 
-    for _ in range(k):
-        output.append(heapq.heappop(count)[1]) #Only append the number
+    for idx in reversed(range(len(buckets))):
+        if buckets[idx] != []:
+            for num in buckets[idx]:
+                output.append(num)
+
+                if len(output) == k:
+                    return output
 
     return output
