@@ -50,7 +50,7 @@ class Solution:
                     if board[row][col] == 'O':
                         capture(row, col)
                         
-        # Traverse the entire board -> Flip all O's into X's
+        # Traverse the entire board -> Flip uncaptured O's into X's
         for row in range(len(board)):
             for col in range(len(board[0])):
                 if board[row][col] == 'O':
