@@ -1,31 +1,19 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        #Time: O(4^n * n) As we have 4 letters with 4 possibilities at most, and n base cases to hit
-        #Space: O(4^n * n) Recursive call-stack
+        # Time: O(4^n) there are 4 decisions to make for each number
+        # Space: O(n)
         
-        if digits == '': return []
+        lookup = {'2': 'abc', '3': 'def', '4': 'ghi', '5':'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
         
-        generate(output := [], '', digits)
-        return output
-    
-def generate(output, current, digits):
-    numToLetter = {'1':'1',
-                   '2':'abc',
-                   '3':'def',
-                   '4':'ghi',
-                   '5':'jkl',
-                   '6':'mno',
-                   '7':'pqrs',
-                   '8':'tuv',
-                   '9':'wxyz',
-                   '0':'0'
-    }
-    
-    if digits == '':
-        output.append(current)
-    else:
-        #Use the first letter to find the possible combinations
-        allChars = numToLetter[digits[0]] 
-        for char in allChars:
-            #Attach and eliminate said letter once we've used it
-            generate(output, current + char, digits[1:])
+        def shuffle(idx, current):
+            if idx >= len(digits):
+                output.append(''.join(current))
+                return
+            
+            nums = lookup[digits[idx]]
+            for num in nums:
+                shuffle(idx + 1, current + [num])   
+        
+        output = []
+        shuffle(0, [])
+        return output if len(digits) else []
