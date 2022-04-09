@@ -1,40 +1,36 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        #Time: O(v + e)
-        #Space: O(v)
+        # Time: O(v + e)
+        # Space: O(v + e)
         
-        def dfs(course):
-            #Base case: loop detected
-            if course in seen:
+        def dfs(node):
+            # Prevent loop
+            if node in seen:
                 return False
+            seen.add(node)
             
-            #Mark current node as visited
-            visited[course] = True
-            seen.add(course)
-            
-            #Continue the traversal
-            for next_course in req[course]:
-                if not dfs(next_course):
+            # Continue DFS
+            for nextNode in adj[node]:
+                if not dfs(nextNode):
                     return False
-            
-            seen.remove(course) #Let other recursive calls traverse through the current node
-            req[course] = [] #Path exhausted, prevent repeated work
+                
+            # Prevent repetitive work
+            adj[node] = []
+            seen.remove(node)
             
             return True
         
-        #Set up variables
-        visited = [False for _ in range(numCourses)]
-        req = {course : [] for course in range(numCourses)}
+        # Form an adjacency list
+        adj = defaultdict(list)
+        
+        for end, start in prerequisites:
+            adj[start].append(end)
+            
+        # DFS starting from all possible nodes. If there's a loop -> impossible to complete all courses
         seen = set()
         
-        #Map which courses point to which into our dict
-        for pair in prerequisites:
-            next_course, course = pair
-            req[course] += [next_course]
-        
-        #Start graph traversal with DFS
-        for course in range(numCourses):
-            if not dfs(course): #Terminate if a loop is detected
+        for start in range(numCourses):
+            if not dfs(start):
                 return False
-            
-        return False not in visited #Return whether all nodes have been visited
+        
+        return True
