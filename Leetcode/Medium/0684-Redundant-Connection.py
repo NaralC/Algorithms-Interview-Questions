@@ -2,38 +2,40 @@ from collections import defaultdict
 
 class Solution:
     def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
-        #Time: O(n^2)
-        #Space: O(n)
-        #Construct our graph edge by edge and return an edge whose nodes are reachable via other edges already
+        # Time: O(?)
+        # Space: O(?)
         
-        def reachEnd(n1, n2):
-            #Loop detected, path can't be reached with this edge
-            if n1 in seen:
-                return False
-            seen.add(n1)
+        def arrive(current, end):
+            # Prevent loop
+            if current in seen:
+                return
+            seen.add(current)
             
-            #If n1 -> n2, then this edge is redundant cause a path is already paved
-            if n1 == n2:
+            # Check if we've reached the goal
+            if current == end:
                 return True
             
-            #Continue DFS
-            for neighbor in adj[n1]:
-                if reachEnd(neighbor, n2):
+            # Continue DFS
+            for nextNode in adj[current]:
+                if arrive(nextNode, end):
                     return True
+            
+            # Relax edge
+            seen.remove(current)
         
+        # Initialize our adjacency list
         adj = defaultdict(list)
-        output = []
+            
+        # Keep building our graph up edge by edge, return the one that causes redundancy
+        seen = set()
         
         for n1, n2 in edges:
-            #Prevent loop
-            seen = set()
+            # If we arrive at n2, that means there's already a path connected - rendering this current edge redundant
+            if arrive(n1, n2):
+                return [n1, n2]
             
-            #If n1 -> n2 then there's already a path already made, so this edge is reduntant
-            if reachEnd(n1, n2):
-                output = [n1, n2]
-            
-            #Safe to connect the nodes
+            # Safe to connect edge
             adj[n1].append(n2)
             adj[n2].append(n1)
         
-        return output
+        return
