@@ -1,22 +1,19 @@
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
-        #Time: O(nlogn)
-        #Space: O(1)
-        #The idea is the same is 'Minimum Number of Arrows to Burst Balloons' but a few modifications
+        # Time: O(nlogn)
+        # Space: O(n)
         
-        intervals.sort(key = lambda x: x[0])
+        intervals.sort()
+        stack = []
         
-        prevEnd = intervals[0][1]
-        count = 0
-        
-        for currentStart, currentEnd in intervals[1:]:
-            #Overlap - keep the smaller one (greedy)
-            if prevEnd > currentStart:
-                count += 1
-                prevEnd = min(prevEnd, currentEnd)
+        for cur in intervals:
+            # Overlap: keep the interval that ends first
+            if len(stack) and stack[-1][1] > cur[0]:
+                if stack[-1][1] > cur[1]:
+                    stack[-1] = cur
             
-            #No overlap - proceed to the next one
+            # No overlap
             else:
-                prevEnd = currentEnd
+                stack.append(cur)
             
-        return count
+        return len(intervals) - len(stack)
