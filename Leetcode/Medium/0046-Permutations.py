@@ -1,14 +1,17 @@
 class Solution:
-    def permute(self, inputNum: List[int]) -> List[List[int]]:
-        #Time: O(!n) As there's one less element in the input each time
-        #Space: O( !n) Recursion call-stack
-
-        generate(output := [], [], inputNum)
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        # Time: O(n * n!)
+        # Space: O(n * n!)
+        
+        def permute(leftToUse, current):
+            if not len(leftToUse):
+                output.append(current)
+                return
+            
+            # Attach a char to the current permutation once and remove it
+            for idx, char in enumerate(leftToUse):
+                permute(leftToUse[:idx] + leftToUse[idx + 1:], current + [char])
+                
+        output = []
+        permute(nums, [])
         return output
-    
-def generate(output, current, inputNum):
-    if inputNum == []:
-        output.append(current)
-    else:
-        for idx, num in enumerate(inputNum):
-            generate(output, current + [num], inputNum[:idx] + inputNum[idx + 1:])

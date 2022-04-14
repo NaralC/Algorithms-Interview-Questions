@@ -13,10 +13,7 @@ class Solution:
             even = getPalindrome(idx, idx + 1, s)
             
             #Update our variable with the longer palindrome
-            current = odd if len(odd) > len(even) else even
-            
-            if len(current) > len(longest):
-                longest = current
+            longest = max(longest, even, odd, key = lambda x: len(x))
                 
         return longest
     
