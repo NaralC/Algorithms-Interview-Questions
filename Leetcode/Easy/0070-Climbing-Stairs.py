@@ -1,17 +1,15 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        #Time: O(n)
-        #Space: O(n)
+        # Time: O(n)
+        # Space: O(n)
+        # Since it's either 1 or 2 at each step, take the sum of 2 previous steps as the current step's value
         
-        steps = [None for _ in range(n + 1)] #Account for step 0
-        steps[0] = 1 #The only way to reach step 0 is to not move
+        # Account for the ground floor (which has 1 way of reaching it - not moving)
+        ways = [0] * (n + 1)
+        ways[0] = 1
         
-        for idx in range(1, n + 1):
-            #To get the number of ways to reach the current step, add up:
-            #The number of ways n steps before that
-            
-            oneStepBefore = steps[idx - 1] if idx >= 1 else 0
-            twoStepBefore = steps[idx - 2] if idx >= 2 else 0
-            steps[idx] = oneStepBefore + twoStepBefore
-        
-        return steps[-1]
+        for idx in range(1, len(ways)):
+            ways[idx] += ways[idx - 2] if idx > 0 else 0
+            ways[idx] += ways[idx - 1] if idx > 0 else 0
+                  
+        return ways[-1]
