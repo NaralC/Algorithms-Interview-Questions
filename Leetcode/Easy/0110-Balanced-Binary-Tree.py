@@ -6,18 +6,20 @@
 #         self.right = right
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        #Time: O(n)
-        #Space: O(n)
-        return dfs(root)[0]
-    
-def dfs(root):
-    #Null nodes are balanced by nature, and have no height
-    if not root:
-        return [True, 0] #[Balanced?, Height]
-    
-    left = dfs(root.left)
-    right = dfs(root.right)
-    
-    balance = abs(left[1] - right[1]) <= 1 and (left[0] and right[0])
-    
-    return [balance, 1 + max(left[1], right[1])]
+        # Time: O(n)
+        # Space: O(n)
+        
+        def dfs(root):
+            # Null nodes are have no height, and are considered balanced
+            if not root:
+                return [0, True] # [Height, Balance]
+            
+            left = dfs(root.left)
+            right = dfs(root.right)
+            
+            # Check the current's node balance (height diff & bottom-up inherited balance)
+            balance = abs(left[0] - right[0]) <= 1 and (left[1] and right[1])
+        
+            return [1 + max(left[0], right[0]), balance]
+            
+        return dfs(root)[1]
