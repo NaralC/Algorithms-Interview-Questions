@@ -1,26 +1,28 @@
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        return kadanesAlgo(nums)
-        
-def optimized(nums):
-    #Time: O(n)
-    #Space: O(1)
+        return dp(nums)
+
+def dp(nums):
+    # Time: O(n)
+    # Space: O(n)
     
-    maxSoFar, maxThisPos = nums[0], nums[0]
+    runningSum = [float('-inf')] * len(nums)
+        
+    # At each position, decide whether the number should be by itself or added to the previously running sum
+    for idx, num in enumerate(nums):
+        runningSum[idx] = max(num, num + runningSum[idx - 1])
+
+    return max(runningSum)
     
-    for idx in range(1, len(nums)):
-        maxThisPos = max(nums[idx], nums[idx] + maxThisPos)
-        maxSoFar = max(maxSoFar, maxThisPos)
-        
-    return maxSoFar
-        
 def kadanesAlgo(nums):
-    #Time: O(n)
-    #Space: O(n)
-    
-    track = [float('-inf') for _ in range(len(nums))]
+    # Time: O(n)
+    # Space: O(1)
+    # Kadane's Algorithm: decide whether the next number should be by itself or added to the running sum
 
-    for idx in range(len(nums)):
-        track[idx] = max(nums[idx], nums[idx] + track[idx - 1])
+    maxSum = runningSum = nums[0]
+        
+    for num in nums[1:]:
+        runningSum = max(num, num + runningSum)
+        maxSum = max(maxSum, runningSum)
 
-    return max(track)
+    return maxSum
