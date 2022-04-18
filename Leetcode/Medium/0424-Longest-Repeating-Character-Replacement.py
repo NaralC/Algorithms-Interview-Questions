@@ -13,7 +13,7 @@ class Solution:
             # Add a new char to current substring
             lookup[s[right]] += 1
             
-            # Shrink the substring/sliding window if the smallest frequency exceeds our replacement quota
+            # Shrink the substring/sliding window if the other frequencies aside from the highest one exceeds our replacement quota
             # Check this by subtracting the highest frequency from the length of current substring
             while (right - left + 1) - max(lookup.values()) > k:
                 lookup[s[left]] -= 1
