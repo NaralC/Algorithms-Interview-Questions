@@ -1,14 +1,17 @@
-class MinStack:
-    #Time: O(1) Since all operations take O(1) time and space
-    #Space: O(1)
+class MinStack: 
+    # Use another array to store the min value at position/time interval
+    
     def __init__(self):
         self.stack = []
         self.minStack = []
 
     def push(self, val: int) -> None:
-        minSoFar = self.minStack[-1] if len(self.minStack) else val
-        self.minStack.append(min(val, minSoFar))
         self.stack.append(val)
+        
+        if not len(self.minStack):
+            self.minStack.append(val)
+        else:
+            self.minStack.append(min(self.minStack[-1], val))
 
     def pop(self) -> None:
         self.stack.pop()
