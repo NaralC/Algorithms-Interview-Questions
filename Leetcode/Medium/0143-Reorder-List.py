@@ -8,28 +8,44 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        #Time: O(n)
-        #Space: O(1)
+        # Time: O(n)
+        # Space: O(1)
         
-        #Split the list into halves, while first half >= second in size
+        # Find the middle of the list
         slow, fast = head, head
+        
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
         
-        #Reverse the second half
-        previous = None
+        # Divide the list into halves and reverse them
+        prev = None
+        
         while slow:
             nextNode = slow.next
-            slow.next = previous
-            previous = slow
+            slow.next = prev
+            prev = slow
             slow = nextNode
         
-        #Reorder the entire list
-        first, second = head, previous
-        while second.next:
-            temp1, temp2 = first.next, second.next
-            first.next = second
-            second.next = temp1
+        # Merge the two halves into a new list
+        dummy = ListNode()
+        ptr = dummy
+        l1, l2 = head, prev
+        
+        while l1 and l2:
+            # Check for the middle element
+            if l1 == l2:
+                ptr.next = l1
+                break
             
-            first, second = temp1, temp2
+            # Left-right repeat
+            ptr.next = l1
+            ptr = ptr.next
+            l1 = l1.next
+            
+            ptr.next = l2
+            ptr = ptr.next
+            l2 = l2.next
+        
+        return dummy.next
+            
