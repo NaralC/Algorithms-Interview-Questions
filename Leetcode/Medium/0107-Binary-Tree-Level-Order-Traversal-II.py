@@ -7,7 +7,7 @@ from collections import deque
 #         self.left = left
 #         self.right = right
 class Solution:
-    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+    def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
         # Time: O(n)
         # Space: O(w)
         
@@ -30,4 +30,4 @@ class Solution:
             
             output.append(lvl)
         
-        return output
+        return output[::-1]
