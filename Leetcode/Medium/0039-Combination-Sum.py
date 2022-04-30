@@ -1,20 +1,18 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        #Time: O(n)
-        #Space: O(n)
-
-        def dfs(combination, currentSum, startIdx):
-            if currentSum > target:
-                return
+        # Time: O(2^n)
+        # Space: O(2^n)
+        
+        # Brute force and stop when running sum exceeds target
+        def dfs(runningSum, path, nums):
+            if runningSum == target:
+                output.append(path)
             
-            elif currentSum == target:
-                output.append(combination)
-                return
-            
-            #Try out every single possibility since the same number can be used over and over
-            for idx in range(startIdx, len(candidates)):
-                dfs(combination + [candidates[idx]], currentSum + candidates[idx], idx)
-                
+            # Two decisions: either use the number and include it, or skip it altogether
+            if runningSum < target and len(nums):
+                dfs(runningSum + nums[0], path + [nums[0]], nums[:]) # Include
+                dfs(runningSum, path, nums[1:]) # Not include
+                    
         output = []
-        dfs([], 0, 0)
+        dfs(0, [], candidates)
         return output
