@@ -1,23 +1,22 @@
 class Solution:
     def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
-        # Time: O(n)
+        # Time: O(nlogn)
         # Space: O(n)
         
+        intervals = sorted(firstList + secondList)
+        
+        # Interval question
         overlap = []
-        idx1, idx2 = 0, 0
+        latestEnd = intervals[0][1]
         
-        while idx1 < len(firstList) and idx2 < len(secondList):
-            # Check for overlap
-            start = max(firstList[idx1][0], secondList[idx2][0])
-            end = min(firstList[idx1][1], secondList[idx2][1])
+        for i in intervals[1:]:
+            # Overlap
+            if latestEnd >= i[0]:
+                overlap.append((i[0], min(i[1], latestEnd)))
+                latestEnd = max(latestEnd, i[1])
             
-            if start <= end:
-                overlap.append((start, end))
-            
-            # Move on from the interval with smaller ending
-            if firstList[idx1][1] < secondList[idx2][1]:
-                idx1 += 1
+            # No overlap
             else:
-                idx2 += 1
-        
+                latestEnd = i[1]
+                
         return overlap
