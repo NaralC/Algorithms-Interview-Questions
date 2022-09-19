@@ -3,18 +3,19 @@ class Solution:
         # Time: O(n)
         # Space: O(n)
         
-        if len(palindrome) < 2:
+        if len(palindrome) == 1:
             return ''
         
-        # Replace with 'a' as far left as possible to minimize the lexicographical size
-        p = list(palindrome)
+        # Lexicographically smallest, start with 'a'
+        # Replace any char as far left with 'a'
+        palindrome = list(palindrome)
         
-        for idx in range(len(p) // 2):
-            if p[idx] != 'a':
-                p[idx] = 'a'
-                return ''.join(p)
+        for idx in range(len(palindrome) // 2):
+            if palindrome[idx] != 'a':
+                palindrome[idx] = 'a'
+                return ''.join(palindrome)
         
-        # Replace with 'b' as far right as it minimizes the lexicographical size
-        # and prevent palindrome in case of strings entirely made of 'a'
-        p[-1] = 'b'
-        return ''.join(p)
+        # If the entire string is strictly made of 'a'
+        palindrome[-1] = 'b'
+            
+        return ''.join(palindrome)
