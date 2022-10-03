@@ -1,40 +1,39 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        # Time: O(4^(mn)) as we have 4 function calls at each cell
-        # Space: O(4^(mn)) 
-        
         def dfs(row, col, idx):
-            # Check for current word's validity
-            if idx > len(word) - 1:
+            # See if it's a match
+            if idx == len(word):
                 return True
-            
-            # Prevent infinite loop, boundary break, and char mismatch
-            if (row, col) in seen:
-                return
-            
+
+            # Boundary breaks
             if row < 0 or col < 0 or row >= len(board) or col >= len(board[0]):
-                return
-            
-            if word[idx] != board[row][col]:
-                return
-            
-            # Continue DFS
+                return False
+
+            # See if current cell's been used up or it's a mismatch
+            if (row, col) in seen or board[row][col] != word[idx]:
+                return False
+
+            # Use up the current cell
             seen.add((row, col))
             idx += 1
-            
-            if dfs(row + 1, col, idx): return True
-            if dfs(row, col + 1, idx): return True
+
             if dfs(row - 1, col, idx): return True
+            if dfs(row + 1, col, idx): return True
             if dfs(row, col - 1, idx): return True
-            
-            # Relax cell to let other searches use it
+            if dfs(row, col + 1, idx): return True
+        
+            # Relax the current cell
             seen.remove((row, col))
         
-        seen = set()
-        
+    
+        # "ABCCED" -> ["A", "B", ..., "D"]
+        word = list(word)
+        seen = set() # (row, col)
+
         for row in range(len(board)):
             for col in range(len(board[0])):
-                if dfs(row, col, 0):
-                    return True
-                    
+                if board[row][col] == word[0]:
+                    if dfs(row, col, 0):
+                        return True
+
         return False
