@@ -1,36 +1,36 @@
+from collections import defaultdict
+
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         # Time: O(v + e)
         # Space: O(v + e)
         
-        def dfs(node):
-            # Prevent loop
-            if node in seen:
+        def dfs(course):
+            if course in cycle:
                 return False
-            seen.add(node)
             
             # Continue DFS
-            for nextNode in adj[node]:
-                if not dfs(nextNode):
+            cycle.add(course)
+            for pre in adj[course]:
+                if not dfs(pre):
                     return False
-                
-            # Prevent repetitive work
-            adj[node] = []
-            seen.remove(node)
             
+            # Prevent repetitive work
+            adj[course] = []
+            cycle.remove(course)
             return True
         
         # Form an adjacency list
         adj = defaultdict(list)
         
-        for end, start in prerequisites:
-            adj[start].append(end)
+        for course, pre in prerequisites:
+            adj[course].append(pre)
             
-        # DFS starting from all possible nodes. If there's a loop -> impossible to complete all courses
-        seen = set()
+        # DFS starting from every courses
+        cycle = set()
         
-        for start in range(numCourses):
-            if not dfs(start):
+        for course in range(numCourses):
+            if not dfs(course):
                 return False
-        
+            
         return True
