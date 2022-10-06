@@ -7,21 +7,29 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        #Time: O(n)
-        #Space: O(n)
-        return depthFirstSearch(root, [p, q])
+        # Time: O(h)
+        # Space: O(h)
+        
+        # Assuming:
+        # No null/empty inputs are allowed
+        # No duplicate nodes allowed
+        # The number of nodes fit in memory
+        # The tree is always binary
+        
+        # Solution:
+        def dfs(node):
+            if not node:
+                return
+            
+            if node in [p, q]:
+                return node
+            
+            left = dfs(node.left)
+            right = dfs(node.right)
+            
+            if left and right:
+                return node
+            return left or right
+        
+        return dfs(root)
     
-def depthFirstSearch(root, target):
-    #Base case: return whether we have found any targets or not
-    if root == None or root in target:
-        return root
-    
-    leftInfo = depthFirstSearch(root.left, target)
-    rightInfo = depthFirstSearch(root.right, target)
-    
-    #Return this node as the LCA if we've found both targets under it
-    if leftInfo and rightInfo:
-        return root
-    #Return one of the subtree that's not null
-    else:
-        return leftInfo if leftInfo else rightInfo
