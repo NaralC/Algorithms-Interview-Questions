@@ -9,10 +9,10 @@ class Solution:
         slots2.sort()
         
         while idx1 < len(slots1) and idx2 < len(slots2):
-            # Overlap
             s1, e1 = slots1[idx1]
             s2, e2 = slots2[idx2]
             
+            # Overlap
             if e1 > s2:
                 start = max(s1, s2)
                 end = min(e1, e2)
