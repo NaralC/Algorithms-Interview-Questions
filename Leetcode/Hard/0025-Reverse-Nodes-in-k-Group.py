@@ -25,6 +25,7 @@ class Solution:
             cur = nxt
         
         # At this point: 
+        # - head = old head
         # - prev = new head
         # - cur = head of the next node
         head.next = self.reverseKGroup(cur, k)
