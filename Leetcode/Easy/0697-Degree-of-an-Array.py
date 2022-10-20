@@ -5,7 +5,7 @@ class Solution:
         # Time: O(n)
         # Space: O(n)
         
-        # Find the number that represents the degree
+        # Find numbers that represent the degree
         lookup = Counter(nums)
         deg = max(lookup.values())
         most_freq = set()
@@ -17,6 +17,7 @@ class Solution:
         # Find the length of subarray[l:r+1] where
         # l = first occurence of most frequent element
         # r = last occurence of most frequent element
+        # since all occurences of most frequent element are in there, equalizing the degree
         output = float('inf')
         
         for candidate in most_freq:
