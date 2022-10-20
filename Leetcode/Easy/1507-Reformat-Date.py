@@ -1,17 +1,18 @@
 class Solution:
     def reformatDate(self, date: str) -> str:
-        #Time: O(?)
-        #Space: O(?)
-
-        reference = {"Jan": '01', "Feb": '02', "Mar": '03', "Apr": '04', 
-                     "May": '05', "Jun": '06', "Jul": '07', "Aug": '08', 
-                     "Sep": '09', "Oct": '10', "Nov": '11', "Dec": '12'}
+        # Time: O(1)
+        # Space: O(1)
         
-        info = date.split(' ')
-        year = info[2]
-        month = reference[info[1]] 
-        date = info[0][:-2]
-        if len(date) < 2:
-            date = '0' + date
+        # Init hashtable to lookup months
+        month_lookup = dict()
+        idx = 1
         
-        return f'{year}-{month}-{date}'
+        for month in ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]:
+            month_lookup[month] = '0' + str(idx) if idx < 10 else str(idx)
+            idx += 1
+        
+        # Split and ship the output
+        day, mon, yr = date.split(' ')
+        day = day[:2] if len(day) > 3 else '0' + day[:1]
+        
+        return f'{yr}-{month_lookup[mon]}-{day}'
