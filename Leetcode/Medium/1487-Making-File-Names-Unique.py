@@ -29,3 +29,30 @@ class Solution:
         
         return output
 
+    # Use a hashset again, so a little more bruteforce, but TLE on LeetCode 🧼
+
+    # def getFolderNames(self, names: List[str]) -> List[str]:
+    #     # Time: O(n)
+    #     # Space: O(n)
+        
+    #     # Count each name's frequency while adding to output
+    #     seen = set()
+    #     output = []
+        
+    #     for n in names:
+    #         # If not already seen, just add to hashset
+    #         if n not in seen:
+    #             output.append(n)
+    #             seen.add(n)
+            
+    #         # If already seen, find the lowest k possible that f"{name}(k)" can fit into the set
+    #         else:
+    #             k = 1
+                
+    #             while n + f'({k})' in seen:
+    #                 k += 1
+                    
+    #             output.append(n + f'({k})')
+    #             seen.add(n + f'({k})')
+        
+    #     return output
