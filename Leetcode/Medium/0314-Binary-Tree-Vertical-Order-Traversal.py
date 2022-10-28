@@ -1,29 +1,33 @@
-from collections import deque, defaultdict
-
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+from collections import defaultdict, deque
+
 class Solution:
     def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        # Time: O(nlogn)
+        # Time: O(n)
         # Space: O(n)
         
-        if not root: return []
-        
-        # Simply put: return node vals which share the same x coordinate
-        coordinates = defaultdict(list)
+        # Map nodes to their corresponding cols
         q = deque([(root, 0)])
+        lookup = defaultdict(list) # { col: [node1, node2, ...] }
         
         while len(q):
-            node, x = q.popleft()
+            node, col = q.popleft()
+            lookup[col].append(node.val)
             
-            # Map coordinates to each node
-            coordinates[x].append(node.val)
-            
-            if node.left: q.append((node.left, x - 1))
-            if node.right: q.append((node.right, x  + 1))
-            
-        return [vals for x, vals in sorted(coordinates.items())]
+            if node.left: q.append((node.left, col - 1))
+            if node.right: q.append((node.right, col + 1))
+        
+        # Ship output
+        output = []
+        
+        for col, nodeList in sorted(lookup.items()):
+            output.append(nodeList)
+        
+        return output
+    

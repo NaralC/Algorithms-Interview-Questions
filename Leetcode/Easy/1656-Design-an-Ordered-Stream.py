@@ -17,4 +17,4 @@ class OrderedStream:
 
 # Your OrderedStream object will be instantiated and called as such:
 # obj = OrderedStream(n)
-# param_1 = obj.insert(idKey,value)
+# param_1 = obj.insert(idKey,value) 

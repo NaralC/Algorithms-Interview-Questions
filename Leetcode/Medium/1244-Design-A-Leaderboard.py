@@ -21,6 +21,7 @@ class Leaderboard:
         # Time: O(klogk + k)
         # Space: O(k)
         
+        # We use a min heap since small values rise to the top, that way we can keep the bigger ones untouched
         minHeap = []
         
         for score in self.board.values():

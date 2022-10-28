@@ -1,24 +1,29 @@
 class Solution:
     def decodeString(self, s: str) -> str:
-        #Time: O(n)
-        #Space: O(n)
+        # Time: O(n)
+        # Space: O(n)
+        
         stack = []
         
         for char in s:
-            if char == ']': #Only with ']', do we start decoding strings
-                encodedString, multiplier = '', ''
+            # Start decoding
+            if char == ']':
+                multiplier, word = '', ''
                 
-                #Inserting in them front of another maintains the original order
+                # Retrieve alphabets
                 while len(stack) and stack[-1].isalpha():
-                    encodedString = stack.pop() + encodedString
-                stack.pop() #Dispose of '['
+                    word = stack.pop() + word
                 
-                #Get the multiplier
+                stack.pop() # Skip '['
+                
+                # Retrieve multiplier
                 while len(stack) and stack[-1].isdigit():
                     multiplier = stack.pop() + multiplier
+                    
+                stack.append(int(multiplier) * word)
                 
-                stack.append(encodedString * int(multiplier))
             else:
                 stack.append(char)
-                
+        
         return ''.join(stack)
+    

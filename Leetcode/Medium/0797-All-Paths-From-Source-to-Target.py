@@ -1,23 +1,24 @@
 class Solution:
     def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
-        #Time: O(?)
-        #Space: O(?)
+        # Time: O(2^n * n)
+        # Space: O(n)
         
-        def dfs(current, history):
-            #No need to check for loops as the input is an acyclic graph
-            history.append(current)
+        def dfs(node, path):
+            # No need to prevent infinite recursion as the graph's acyclic
+            path.append(node)
             
-            #Check if we've reached the end
-            if current == len(graph) - 1:
-                output.append(history)
+            # Reached the end
+            if node == len(graph) - 1:
+                output.append(path)
+                return
             
-            for nextNode in graph[current]:
-                dfs(nextNode, history.copy())
+            # Continue DFS
+            for nxt in graph[node]:
+                dfs(nxt, path.copy())
+            
+            return
         
-        
-        #Start graph traversal with DFS
         output = []
-        
         dfs(0, [])
-        
         return output
+    
