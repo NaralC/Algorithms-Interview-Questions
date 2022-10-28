@@ -1,40 +1,46 @@
-class DoublyLinkedList:
-    def __init__(self, val):
+class Node:
+    def __init__(self, val, prev, nxt):
         self.val = val
-        self.left = None
-        self.right = None
+        self.prev = prev
+        self.nxt = nxt
 
 class BrowserHistory:
-
+    # Time: O(n)
+    # Space: O(n)
+    
+    # Time: O(1)
+    # Space: O(n)
     def __init__(self, homepage: str):
-        self.root = DoublyLinkedList(homepage)
-
+        self.browser = Node(homepage, None, None)
+        self.cur_page = self.browser
+        
+    # Time: O(1)
+    # Space: O(1)
     def visit(self, url: str) -> None:
-        #This automatically discards the nodes to the right
-        nextNode = DoublyLinkedList(url)
-        nextNode.left = self.root
-        self.root.right = nextNode
-        self.root = nextNode
+        nxtPage = Node(url, self.cur_page, None)
+        self.cur_page.nxt = nxtPage
+        self.cur_page = self.cur_page.nxt
 
+    # Time: O(n)
+    # Space: O(1)
     def back(self, steps: int) -> str:
-        #Keep going back x steps or until it's the end of the list
-        for _ in range(steps):
-            if not self.root.left:
-                break
-            
-            self.root = self.root.left
         
-        return self.root.val
+        while steps > 0 and self.cur_page.prev:
+            self.cur_page = self.cur_page.prev
+            steps -= 1
+            
+        return self.cur_page.val
 
+    # Time: O(n)
+    # Space: O(1)
     def forward(self, steps: int) -> str:
-        #Keep going forward x steps or until it's the end of the list
-        for _ in range(steps):
-            if not self.root.right:
-                break
-            
-            self.root = self.root.right
         
-        return self.root.val
+        while steps > 0 and self.cur_page.nxt:
+            self.cur_page = self.cur_page.nxt
+            steps -= 1
+            
+        return self.cur_page.val
+
 
 # Your BrowserHistory object will be instantiated and called as such:
 # obj = BrowserHistory(homepage)

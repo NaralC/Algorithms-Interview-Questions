@@ -12,6 +12,8 @@ class Solution:
         # Time: O(n)
         # Space: O(n)
         
+        if not root: return []
+        
         # Map nodes to their corresponding cols
         q = deque([(root, 0)])
         lookup = defaultdict(list) # { col: [node1, node2, ...] }

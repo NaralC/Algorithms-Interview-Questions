@@ -1,16 +1,17 @@
 class Solution:
     def twoCitySchedCost(self, costs: List[List[int]]) -> int:
-        #Time: O(nlogn)
-        #Space: O(1)
-        #Greedily sort costs based on the gap between A and B, and pour the first half to A. The idea is "How much money can we save by sending this person to A instead of B"
-        #The other way around works too
+        # Time: O(nlogn)
+        # Space: O(1)
         
-        costs = sorted(costs, key = lambda x: x[0] - x[1])
-        output = 0
+        # Greedy - sort by difference in price
+        costs.sort(key = lambda x: x[0] - x[1])
+        total = 0
+        l = 0
+        r = len(costs) - 1
         
-        for idx in range(len(costs) // 2):
-            output += costs[idx][0] + costs[-1 - idx][1]
+        while l <= r:
+            total += costs[l][0] + costs[r][1]
+            l += 1; r -= 1
         
-        return output
-        
+        return total
         
