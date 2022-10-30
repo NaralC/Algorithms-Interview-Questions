@@ -1,24 +1,64 @@
+from heapq import *
+
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        # Time: O(nlogn)
-        # Space: O(n)
-        # Find the max number of overlapping meetings
+        return timestamps(intervals)
+        # return priorityQueue(intervals)
         
-        # Retrieve the timestamps of when rooms are needed
-        timestamps = []
+def timestamps(intervals):
+    # Time: O(nlogn)
+    # Space: O(n)
+
+    # Categorize all timestamps
+    timestamps = []
+    
+    for start, end in intervals:
+        timestamps.append((start, 'start'))
+        timestamps.append((end, 'end'))
         
-        for start, end in intervals:
-            timestamps.append((start, 1)) # Require one more room
-            timestamps.append((end, -1)) # Require one less room
-        
-        timestamps.sort()
-        
-        # Go through the timestamp chronologically
-        output = 0
-        cur = 0
-        
-        for _, change in sorted(timestamps):
-            cur += change
-            output = max(output, cur)
-        
-        return output
+    timestamps.sort()
+
+    # Operate on a basis that:
+    # - if a meeting starts, allocate one more room
+    # - if a meeting ends, free one room
+    room_usage = output = 0
+    
+    for time, info in timestamps:
+        if info == 'start':
+            room_usage += 1
+        else:
+            room_usage -= 1 if room_usage > 0 else 0
+            
+        output = max(output, room_usage)
+
+    return output
+
+def priorityQueue(intervals):
+    # Time: O(nlogn)
+    # Space: O(n)
+
+    # Push every timestamp into a min heap
+    minHeap = [] # (time, start/end)
+
+    for start, end in intervals:
+        heappush(minHeap, (start, 'start'))
+        heappush(minHeap, (end, 'end'))
+
+    # Operate on a basis that:
+    # - if a meeting starts, allocate one more room
+    # - if a meeting ends, free one room
+    room_usage = output = 0
+
+    while len(minHeap):
+        time, info = heappop(minHeap)
+
+        if info == 'start':
+            room_usage += 1
+
+        else:
+            room_usage -= 1 if room_usage > 0 else 0
+
+        output = max(output, room_usage)
+
+    return output
+    
