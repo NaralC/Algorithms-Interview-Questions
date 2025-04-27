@@ -1,21 +1,20 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        # Time: O(n)
-        # Space: O(n)
+        maxLen = 0
+        seen = set()
+        l, r = 0, 0
 
-        substr = set()
-        output = 0
-        l = 0
-        
-        for r in range(len(s)):
-            # Keep sliding our window to the right until there's no duplicate
-            while s[r] in substr:
-                substr.remove(s[l])
+        while r < len(s):
+            # New char, not a dupe
+            if s[r] not in seen:
+                seen.add(s[r])
+                maxLen = max(maxLen, len(seen))
+                r += 1
+
+            # New char, is a dupe
+            elif s[r] in seen:
+                seen.remove(s[l])
                 l += 1
-                
-            # New addition
-            substr.add(s[r])
-            output = max(output, len(substr))
+
+        return maxLen
         
-        return output
-    
