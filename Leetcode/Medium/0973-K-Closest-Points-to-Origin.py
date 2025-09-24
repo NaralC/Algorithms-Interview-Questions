@@ -6,14 +6,16 @@ class Solution:
         # Space: O(k)
         
         maxHeap = []
-        
+
         for x, y in points:
-            heappush(maxHeap, (- distance(x, y), [x, y])) # Make the heap sort the coordinates by their distance
-            
-            if len(maxHeap) > k:
-                heappop(maxHeap)
-        
-        return [c for d, c in maxHeap]
+            distance = -getDistance(x, y) # max heap since we want to keep smaller values
+            heappush(maxHeap, (distance, [x, y]))
+
+            while len(maxHeap) > k:
+                heappop(maxHeap) # push out largest values
+
+        return [coordinates for distance, coordinates in maxHeap]
     
 def distance(x, y):
+
     return sqrt((x - 0) ** 2 + (y - 0) ** 2)
