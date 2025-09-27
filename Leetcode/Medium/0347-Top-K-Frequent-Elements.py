@@ -5,19 +5,18 @@ class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         return bucketSort(nums, k)
         
-def maxHeap(nums, k):
-    # Time: O(klogn)
-    # Space: O(n)
+def minimumHeap(nums, k):
+    # Time: O(n + klogn)
+    # Space: O(n + k)
+    tracker = Counter(nums)
 
-    # Count the frequency of each number with a hash table
-    freq = Counter(nums)
+    # We use a min heap so least frequent elements rise to the top and we pop them later
+    minHeap = [(freq, num) for num, freq in tracker.items()]
+    heapify(minHeap)
 
-    # Let the heap sort the numbers by their frequencies
-    nums = [(appearance, num) for num, appearance in freq.items()]
-    heapify(nums)
+    while len(minHeap) > k: heappop(minHeap)
 
-    # Return top k most frequent elements
-    return [num for _, num in nlargest(k, nums)]
+    return [num for freq, num in minHeap]
         
 def bucketSort(nums, k):
     # Time: O(n)
@@ -44,5 +43,6 @@ def bucketSort(nums, k):
 
                 if len(output) == k:
                     return output
+
 
     return output
