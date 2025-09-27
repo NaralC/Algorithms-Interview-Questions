@@ -1,30 +1,35 @@
+from heapq import *
+from collections import *
+
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        # Time: O(n * log26) maxHeap with only English alphabets
-        # Space: O(26)
-        
-        # Put each char's freq into maxHeap, with biggest freqs being on top
-        frequencies = Counter(tasks)
-        maxHeap = [-freq for freq in frequencies.values()]
+        # Time: O(nlogk)
+        # Space: O(n)
+
+        # Tracks and uses up *the most frequent* (and available) tasks first. We can ignore the letters
+        maxHeap = [-freq for _, freq in Counter(tasks).items()]
         heapify(maxHeap)
-        
-        # Use up the most frequent chars first (from the heap)
-        # And put them into the q, awaiting the next it becomes available (accounting the cooldown)
+        # Tracks tasks on cooldown to be eventually put back into the heap. Contains (readyWhen, freq)
+        q = deque()
         time = 0
-        q = deque() # holds (freq, time of availability)
         
-        while len(q) or len(maxHeap):
-            # Put the most freq chars into q
+        while len(maxHeap) or len(q):
+            # If tasks are ready in the q
+            while len(q) and time >= q[0][0]:
+                # Put them into the heap
+                _, negFreq = q.popleft()
+                heappush(maxHeap, negFreq)
+
+            # Perform a task from the heap
             if len(maxHeap):
-                freq = -heappop(maxHeap) - 1 # Decrement the count
-                
-                if freq > 0:
-                    q.append((-freq, time + n))
-                
-            # Use a char if it comes time
-            if len(q) and q[0][1] == time:
-                heappush(maxHeap, q.popleft()[0])
-            
+                posFreq = -heappop(maxHeap)
+                posFreq -= 1
+
+                # Put into q
+                if posFreq:
+                    q.append((time + n + 1, -posFreq))
+
             time += 1
-            
+
         return time
+        
