@@ -5,20 +5,24 @@ class Solution:
 def hashSet(nums):
     # Time: O(n)
     # Space: O(n)
+    if not len(nums): return 0
 
-    output = 0
-    lookup = set(nums)
+    seen = set(nums)
+    output = 1
 
-    # Check for the longest sequence starting from every number
-    for num in nums:
-        # A number qualifies as a start if a number smaller than it by 1 doesn't exist
-        if num - 1 not in lookup:
-            length = 1
+    # TLE optimization: iterate thru set to skip dupe numbers
+    for num in seen:
+        # TLE optimization: only look at starts of sequences, not ones in the middle
+        if num - 1 in seen: continue
 
-            while num + length in lookup:
-                length += 1
+        length = 1
+        curNum = num
 
-            output = max(output, length)
+        while curNum + 1 in seen:
+            length += 1
+            curNum += 1
+
+        output = max(output, length)
 
     return output
         
@@ -42,5 +46,6 @@ def sorting(nums):
         else:
             output = max(output, runningLength)
             runningLength = 1
+
 
     return max(output, runningLength)
