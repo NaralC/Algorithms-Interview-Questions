@@ -2,23 +2,23 @@ class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
         # Time: O(n)
         # Space: O(n)
-        
         stack = []
-        math = {'+' : lambda a, b: a + b, 
-                '-' : lambda a, b: a - b, 
-                '*' : lambda a, b: a * b, 
-                '/' : lambda a, b: int(a / b)}
-        
-        # Perform a math operation on the top 2 numbers of the stack when needed
+
+        def calculate(sign, n2, n1):
+            if sign == '+': return n1 + n2
+            elif sign == '-': return n1 - n2
+            elif sign == '*': return n1 * n2
+            elif sign == '/': return int(n1 / n2)
+
         for char in tokens:
-            if char in math:
-                operand2 = stack.pop()
-                operand1 = stack.pop()
-                
-                operation = math[char]
-                stack.append(operation(operand1, operand2))
-                
+            # If a math sign: pop the top 2 number and calculate
+            if char in ['+', '-', '*', '/']:
+                result = calculate(char, stack.pop(), stack.pop())
+                stack.append(result)
+
+            # If number: add to stack
             else:
                 stack.append(int(char))
-                
-        return stack[-1]
+
+        return stack[0]
+        
