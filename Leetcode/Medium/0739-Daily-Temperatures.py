@@ -22,15 +22,22 @@ def noStack(temperatures):
     return output
         
 def stack(temperatures):
-    #Time: O(n)
-    #Space: O(n)
-    output, stack = [0] * len(temperatures), []
+    # Time: O(n)
+    # Space: O(n)
 
-    for today, temp in enumerate(temperatures):
-        while len(stack) and temp > stack[-1][0]:
-            prevDay = stack.pop()[-1] #get the date of the cooler day
-            output[prevDay] = today - prevDay #output[prevDay] = difference in number of days
+    # Use the top of the stack (warmer temps) to 'crush' colder temps
+    stack = [] # contains (idx, temp)
+    output = [0] * len(temperatures)
 
-        stack.append([temp, today]) #stack = [[temp, idx]]
+    for curIdx, curTemp in enumerate(temperatures):
+        # Current temp is warmer than former one(s)
+        while len(stack) and curTemp > stack[-1][1]:
+            pastIdx, pastTemp = stack.pop()
+            output[pastIdx] = abs(curIdx - pastIdx)
+        
+        # Current temp is colder than former one
+        if not len(stack) or curTemp <= stack[-1][1]:
+            stack.append((curIdx, curTemp))
 
     return output
+
