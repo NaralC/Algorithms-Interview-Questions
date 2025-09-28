@@ -38,12 +38,13 @@ class Solution:
         for pos, spd in cars:
             timeNeeded = (target - pos) / spd
 
-            # Merge: current car catches faster ones
+            # Merge: current car/fleet is slower than ones that are behind; a fleet is formed
             if timeNeeded > maxTimeNeeded:
                 maxTimeNeeded = timeNeeded
                 fleet += 1
 
-            # Do nothing: current car arrives before ones that are behind
+            # Do nothing: current car/fleet arrives before ones that are behind
             else: pass
 
         return fleet
+
