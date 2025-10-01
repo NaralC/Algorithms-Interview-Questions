@@ -31,6 +31,6 @@ class Solution:
 
         for idx in range(2, len(nums)):
             # Can't rob adjacent: either rob this (along with a non-adjacent house to the left) or just the previous one
-            lookup[idx] = max(lookup[idx - 2] + nums[idx], lookup[idx - 1])
+            lookup[idx] = max(nums[idx] + lookup[idx - 2], lookup[idx - 1])
 
         return max(lookup)
