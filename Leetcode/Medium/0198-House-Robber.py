@@ -19,15 +19,18 @@ def slidingWindow(nums):
     return rob2 #Since the max amount of cash is decided at the last position
     
         
-def memoization(nums):
-    #Time: O(n)
-    #Space: O(n)
-    dp = [0] * len(nums)
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        # Time: O(n)
+        # Space: O(n)
+        if len(nums) <= 1: return max(nums)
 
-    for idx, num in enumerate(nums):
-        if idx < 2:
-            dp[idx] = num
-        else:
-            dp[idx] = num + max(dp[idx - 2], dp[idx - 3])
+        lookup = [0] * len(nums)
+        lookup[0] = nums[0]
+        lookup[1] = max(nums[0], nums[1])
 
-    return max(dp)
+        for idx in range(2, len(nums)):
+            # Can't rob adjacent: either rob this (along with a non-adjacent house to the left) or just the previous one
+            lookup[idx] = max(lookup[idx - 2] + nums[idx], lookup[idx - 1])
+
+        return max(lookup)
