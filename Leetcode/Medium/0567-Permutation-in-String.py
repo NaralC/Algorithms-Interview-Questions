@@ -1,3 +1,32 @@
+from collections import Counter
+
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        # Time: O(nm)
+        # Space: O(n + m)
+        lookupS1, lookupS2 = Counter(s1), Counter(s2[:len(s1)])
+
+        #                  l
+        # s1 = "ab", s2 = "eidbaooo"
+        #                   r
+        l, r = 0, len(s1) - 1
+
+        while r < len(s2) - 1:
+            # Compare
+            if lookupS1 == lookupS2: return True
+
+            # Expand window to the right
+            r += 1
+            lookupS2[s2[r]] += 1
+
+            # Shrink window from the left
+            if lookupS2[s2[l]] > 0: lookupS2[s2[l]] -= 1
+            if lookupS2[s2[l]] <= 0: del lookupS2[s2[l]]
+            l += 1
+
+        return lookupS1 == lookupS2
+
+
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         # Time: O(n)
@@ -31,4 +60,5 @@ class Solution:
             
             left += 1; right += 1
             
+
         return freq1 == freq2
